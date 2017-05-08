@@ -39,10 +39,13 @@ int main() {
 			cout << "Enter Player 2: ";
 			cin >> player2;
 
-			//Initialize Grid
-			curr.print_grid();
-			curr.set_value(1, 'x');
-			curr.print_grid();
+			//Play game and get the result
+			Grid *temp = &curr;
+			char result = playgame(temp);
+
+			//Process the result and update the score
+
+			//Reset the board
 			curr.reset();
 
 			break;
@@ -81,4 +84,12 @@ int main() {
 
 	//End main
 	return 0;
+}
+
+
+//Function to simulate game play
+//Returns x or o if there is a winner, or d is there is a draw
+char playgame(Grid* game) {
+
+	return 'd';
 }

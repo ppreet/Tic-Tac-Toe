@@ -1,4 +1,5 @@
 *.VC.VC.opendb
 *.VC.db
 .vs
+.sln
 

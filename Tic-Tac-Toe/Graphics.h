@@ -33,8 +33,8 @@ public:
 
 		//Still need to print horizontal bars
 		cout << endl;
-		cout << " " << values[0] << " " << "|" << " " << values[1] << " " << "|" << " " << values[2] << " " << endl;
-		cout << " " << values[3] << " " << "|" << " " << values[4] << " " << "|" << " " << values[5] << " " << endl;
+		cout << "_" << values[0] << "_" << "|" << "_" << values[1] << "_" << "|" << "_" << values[2] << "_" << endl;
+		cout << "_" << values[3] << "_" << "|" << "_" << values[4] << "_" << "|" << "_" << values[5] << "_" << endl;
 		cout << " " << values[6] << " " << "|" << " " << values[7] << " " << "|" << " " << values[8] << " " << endl;
 		cout << endl;
 	}
