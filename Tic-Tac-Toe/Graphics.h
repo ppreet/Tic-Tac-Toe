@@ -36,7 +36,6 @@ public:
 		cout << "_" << values[0] << "_" << "|" << "_" << values[1] << "_" << "|" << "_" << values[2] << "_" << endl;
 		cout << "_" << values[3] << "_" << "|" << "_" << values[4] << "_" << "|" << "_" << values[5] << "_" << endl;
 		cout << " " << values[6] << " " << "|" << " " << values[7] << " " << "|" << " " << values[8] << " " << endl;
-		cout << endl;
 	}
 
 	//Reset the Grid values
@@ -59,5 +58,17 @@ public:
 		}
 
 		values[pos] = c;
+	}
+
+	//Get grid value as a string
+	string get_value() {
+
+		string s = "";
+		for (int i = 0; i < 9; ++i) {
+
+			s += values[i];
+		}
+
+		return s;
 	}
 };

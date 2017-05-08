@@ -3,6 +3,12 @@
 #include"Graphics.h"
 using namespace std;
 
+char first = 'x';
+
+char playgame(Grid* curr, string x, string o);
+char game_result(Grid* curr);
+
+
 int main() {
 
 	//Variables
@@ -12,7 +18,9 @@ int main() {
 
 	//Switch variables
 	Grid curr = Grid();
-	string player1, player2;
+	Grid *temp = &curr;
+	string playerx, playero;
+	char result = 'd';
 
 	//Run the game
 	while (game_run) {
@@ -34,16 +42,32 @@ int main() {
 
 			//Get player info
 			cout << "Starting New Game..." << endl;
-			cout << "Enter Player 1: ";
-			cin >> player1;
-			cout << "Enter Player 2: ";
-			cin >> player2;
+			cout << "Enter Player X: ";
+			cin >> playerx;
+			cout << "Enter Player O: ";
+			cin >> playero;
 
 			//Play game and get the result
-			Grid *temp = &curr;
-			char result = playgame(temp);
+			temp = &curr;
+			temp->print_grid();
+			result = playgame(temp, playerx, playero);
 
 			//Process the result and update the score
+			if (result == 'o') {
+
+				player_tracker[playero] += 1;
+				cout << playero + " won!" << endl;
+			}
+			else if (result == 'x') {
+
+				player_tracker[playerx] += 1;
+				cout << playerx + " won!" << endl;
+			}
+			else {
+
+				//Draw
+				cout << "The game is tied!" << endl;
+			}
 
 			//Reset the board
 			curr.reset();
@@ -89,7 +113,96 @@ int main() {
 
 //Function to simulate game play
 //Returns x or o if there is a winner, or d is there is a draw
-char playgame(Grid* game) {
+char playgame(Grid* game, string x, string o) {
 
-	return 'd';
+	char curr = first;
+
+	//Run the game
+	while (true) {
+
+		//Ask correct player for move
+		if (curr == 'x') {
+
+			int move = 0;
+			cout << x + "\'s move: ";
+			cin >> move;
+			move -= 1; //0-indexing
+			
+			//Check for invalid move
+			string currgrid = game->get_value();
+			if (currgrid[move] == 'X' || currgrid[move] == 'O') {
+
+				cout << "Invalid move! Try again" << endl;
+				continue;
+			}
+
+			//Execute valid move
+			game->set_value(move, 'X');
+		}
+		else if(curr == 'o') {
+
+			int move = 0;
+			cout << o + "\'s move: ";
+			cin >> move;
+			move -= 1; //0-indexing
+
+			//Check for invalid move
+			string currgrid = game->get_value();
+			if (currgrid[move] == 'X' || currgrid[move] == 'O') {
+
+				cout << "Invalid move! Try again" << endl;
+				continue;
+			}
+
+			//Execute valid move
+			game->set_value(move, 'O');
+		}
+
+		//Print grid
+		game->print_grid();
+
+		//Change curr
+		if (curr == 'x') {
+
+			curr = 'o';
+		}
+		else {
+
+			curr = 'x';
+		}
+
+		//Check if the game has ended
+		char result = game_result(game);
+
+		//Continue game if no result
+		if (result == 'c') {
+			continue;
+		}
+
+		//Otherwise, change first and return result
+		if (first == 'x') {
+			first = 'o';
+		}
+		else {
+			first = 'x';
+		}
+
+		return result;
+	}
+
+	return 'x';
 }
+
+//Function to see if game has ended
+//Returns x, o, d or c (continue)
+char game_result(Grid * curr){
+
+	string check = curr->get_value();
+	
+	//Insert gamechecking algo here
+	//Also check if all the squares are filled and it is a tie
+
+	return 'c';
+}
+
+//Comparator to sort the scores in order
