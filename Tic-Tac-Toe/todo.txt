@@ -1,0 +1,4 @@
+Add help message
+Add comparator to sort scores
+
+Polish wherever need be.

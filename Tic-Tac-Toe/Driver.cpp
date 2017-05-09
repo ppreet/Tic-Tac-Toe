@@ -53,20 +53,23 @@ int main() {
 			result = playgame(temp, playerx, playero);
 
 			//Process the result and update the score
-			if (result == 'o') {
+			if (result == 'O') {
 
 				player_tracker[playero] += 1;
 				cout << playero + " won!" << endl;
+				cout << endl;
 			}
-			else if (result == 'x') {
+			else if (result == 'X') {
 
 				player_tracker[playerx] += 1;
 				cout << playerx + " won!" << endl;
+				cout << endl;
 			}
 			else {
 
 				//Draw
 				cout << "The game is tied!" << endl;
+				cout << endl;
 			}
 
 			//Reset the board
@@ -76,28 +79,42 @@ int main() {
 
 		//Display scores
 		case 2:
+
+			if (player_tracker.size() == 0) {
+
+				cout << "No scores to show" << endl;
+				cout << endl;
+				break;
+			}
 			
 			cout << "Current scores:" << endl;
 			for (auto i = player_tracker.begin(); i != player_tracker.end(); ++i) {
 
 				cout << i->first << ": " << i->second << endl;
 			}
+
+			cout << endl;
+
 			break;
 
 		//Display help message
 		case 3:
 			cout << "This is a help message" << endl;
+			cout << endl;
 			break;
 			
 		//Exit Game
 		case 4:
 
 			game_run = false;
+			cout << "BYE!" << endl;
+			cout << endl;
 			continue;
 
 		//Bad option
 		default:
-			cout << "Option not recognized. Please try again" << endl;
+			cout << "Option not recognized. Please try again." << endl;
+			cout << endl;
 			break;
 
 		} //End switch
@@ -190,6 +207,7 @@ char playgame(Grid* game, string x, string o) {
 		return result;
 	}
 
+	//Control should never reach here
 	return 'x';
 }
 
@@ -202,7 +220,74 @@ char game_result(Grid * curr){
 	//Insert gamechecking algo here
 	//Also check if all the squares are filled and it is a tie
 
-	return 'c';
+	//The state of the game can be determined by checking 5 values
+	//Value 0
+	if (check[0] != '0') {
+
+		char val = check[0];
+
+		//Check row
+		if (check[1] == val && check[2] == val) return val;
+
+		//Check diagonal
+		if (check[4] == val && check[8] == val) return val;
+
+		//Check col
+		if (check[3] == val && check[6] == val) return val;
+	}
+
+	//Value 1
+	if (check[1] != '1') {
+
+		char val = check[1];
+
+		//Check col
+		if (check[4] == val && check[7] == val) return val;
+	}
+
+	//Value 2
+	if (check[2] != '2') {
+
+		char val = check[2];
+
+		//Check col
+		if (check[5] == val && check[8] == val) return val;
+
+		//Check diag
+		if (check[4] == val && check[6] == val) return val;
+
+	}
+
+	//Value 3
+	if (check[3] != '3') {
+
+		char val = check[3];
+
+		//Check row
+		if (check[4] == val && check[5] == val) return val;
+	}
+
+	//Value 6
+	if (check[6] != '6') {
+
+		char val = check[6];
+
+		//Check row
+		if (check[7] == val && check[8] == val) return val;
+	}
+
+	//At this point, it is either a draw or the game hasn't ended
+	for (int i = 0; i < check.length(); ++i) {
+
+		//Game hasn't ended
+		if (check[i] != 'X' && check[i] != 'O') {
+
+			return 'c';
+		}
+	}
+
+	//Game is a tie
+	return 'd';
 }
 
 //Comparator to sort the scores in order
