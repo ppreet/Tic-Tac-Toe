@@ -1,4 +1,4 @@
 Add help message
 Add comparator to sort scores
-
+Add README
 Polish wherever need be.
